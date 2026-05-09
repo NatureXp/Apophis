@@ -1,3 +1,17 @@
+-- Key System Bypass
+local old;
+old = hookfunction(request or http_request or syn.request, function(options)
+    if options.Url:find("peeky.pythonanywhere") or options.Url:find("use_key") then
+        return {
+            StatusCode = 200,
+            Body = '{"status":"success","message":"Authorized"}' 
+        }
+    end
+    return old(options)
+end)
+
+getgenv().Key = "Bypassed" 
+
 local Env = getfenv();
 local w = {};
 local v1 = {...};
@@ -13888,11 +13902,3 @@ if r216 then
         end;
     end;
 end;
-return (function(...)
-    while true do
-        l1 = l2;
-        l2 = l1;
-        r1(); 
-    end;
-    return; 
-end)();
